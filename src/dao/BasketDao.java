@@ -177,9 +177,21 @@ public class BasketDao {
 	public static void supp(int id) throws SQLException {
 		Connection connexion =ConnexionBDD.getInstance().getCnx(); 
          /* Création de l'objet gérant les requêtes */		
-		String insertTableSQL = "delete from panier where id=?";
+		String insertTableSQL = "delete from panier where idpanier=?";
 		PreparedStatement preparedStatement = connexion.prepareStatement(insertTableSQL);
 		preparedStatement.setInt(1, id);
+		// execute insert SQL stetement
+		preparedStatement.executeUpdate();
+		
+	}
+	
+	public static void suppProduct(int idpanier, int idproduct) throws SQLException {
+		Connection connexion =ConnexionBDD.getInstance().getCnx(); 
+         /* Création de l'objet gérant les requêtes */		
+		String insertTableSQL = "delete from panier where idpanier=? and idproduit = ?";
+		PreparedStatement preparedStatement = connexion.prepareStatement(insertTableSQL);
+		preparedStatement.setInt(1, idpanier);
+		preparedStatement.setInt(2, idproduct);
 		// execute insert SQL stetement
 		preparedStatement.executeUpdate();
 		

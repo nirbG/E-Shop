@@ -59,6 +59,7 @@
 <ul>
   <li><a class="active" href="/E-Shop/">E-Shop</a></li>
   <li><a href="/E-Shop/ListProducts">Nos Produits</a></li>
+  <li><a href="/E-Shop/MyBasket">Votre panier</a></li>
   <li style="float:right;display:inline-block" >
   <%
   	out.println((String) request.getAttribute("button"));
