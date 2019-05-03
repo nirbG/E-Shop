@@ -56,8 +56,10 @@ public class ListProducts extends HttpServlet {
 						"  		<h3 style='magin-bottom:0px'>"+"<a href='/E-Shop/DetailProduct?idprod="+p.getId()+"'>"+p.getNom()+"</a></h3>\r\n" + 
 						"  		<div class='prix'>\r\n" + 
 						"  			<div>prix:"+p.getPrix()+"€</div>\r\n" + 
-						"  			<div >\r\n" + 
-						"  				<button class=\"btn\" style=\"float: inline-end;\">Ajouter au panier</button>\r\n" + 
+						"  			<div >\r\n" +
+						"				<a href=\"/E-Shop/AddToBasket?idprod=" + p.getId() + "\">" + 
+						"  					<button class=\"btn\" style=\"float: inline-end;\">Ajouter au panier</button>\r\n" + 
+						" 				</a>" +
 						"  			</div>\r\n" + 
 						"  		</div>\r\n" + 
 						"	</div>\r\n" + 
