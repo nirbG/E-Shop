@@ -56,7 +56,7 @@ public class DetailProduct extends HttpServlet {
 						"  			<h3 style='margin:0%'>"+p.getNom()+"</h3>\r\n" +
 						"  				<div style='text-align:end'>prix:"+p.getPrix()+"€</div>\r\n" +  
 						"  			</div>\r\n" + 
-						"  			<div class='prix'>\r\n" + 
+						"  			<div class='prixbtn'>\r\n" + 
 						"				<div id='desc'>"+p.getDescription()+"</div>" + 
 						"			<div >\r\n" + 
 						"				<a href=\"/E-Shop/AddToBasket?idprod=" + p.getId() + "\">" + 

@@ -65,7 +65,7 @@
   %>
 </div>
 	<div style="margin:2% 5%">
-		<h1> login</h1>
+		<h1>Se connecter</h1>
 		<div class="wrapper">
 		<div></div>
 			<div>
@@ -153,7 +153,7 @@ ul {
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }

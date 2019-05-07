@@ -13,7 +13,7 @@
   %>
 </div>
 	<div style="margin:2% 5%">
-	<h1>Confirmer le mot de passe :</h1>
+	<h1>Confirmer votre mots de passe :</h1>
 	<div class="wrapper">
 		<div></div>
 			<div>
@@ -97,7 +97,7 @@ ul {
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }

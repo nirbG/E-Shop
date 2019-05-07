@@ -12,12 +12,9 @@
 <div class="topnav">
   <a class="url active" href="/E-Shop/">E-Shop</a>
   <a class="url" href="/E-Shop/ListProducts">Nos produits</a>
-  <%
-  	out.println((String) request.getAttribute("button"));
-  %>
 </div>
 	<div style="margin:2% 5%">
-		<h1> Create users</h1>
+		<h1>Créer un utilisateur</h1>
 		<div class="wrapper">
 		<div></div>
 			<div>
@@ -26,11 +23,11 @@
 					<input name="action" type="hidden" value="1">
 					<p>Nom* :</p>
 					<input id="nom" type="text" name="nom" >
-					<p>Prenom* :</p>
+					<p>Prénom* :</p>
 					<input id="prenom" type="text" name="prenom" >
-					<p>Password* :</p>
+					<p>Mots de passe* :</p>
 					<input id="password" type="password" name="password" >
-					<p>conf Password* :</p>
+					<p>confirmer mots de passe* :</p>
 					<input id="conf" type="password" name="conf" >
 					<p>Email* :</p>
 					<input id="email" type="email" name="email" >
@@ -192,7 +189,7 @@ li a:hover:not(.active) {
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }

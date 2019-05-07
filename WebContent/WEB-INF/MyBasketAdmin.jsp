@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>E-Shop</title>
 </head>
 <body>
 
@@ -23,7 +23,7 @@
   		 out.println((String) request.getAttribute("prods"));
 	  %>
 	</div>
-	<h2>prix : <% out.println((String) request.getAttribute("prix")); %></h2>
+	<h2>Prix : <% out.println((String) request.getAttribute("prix")); %></h2>
 </div>
 <style>
 /* Style the top navigation bar */
@@ -47,7 +47,7 @@
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }
@@ -147,7 +147,7 @@ li a:hover:not(.active) {
 
     .wrapper {
   	display: grid;
-  	grid-template-columns: repeat(2, 1fr);
+  	grid-template-columns: repeat(1, 1fr);
   }
     .btn {
   	 font-size: 14px;

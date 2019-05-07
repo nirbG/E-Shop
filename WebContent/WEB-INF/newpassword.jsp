@@ -14,15 +14,15 @@
   %>
 </div>
 	<div style="margin:2% 5%">
-	<h1>Nouveau mot de passe :</h1>
+	<h1>Nouveau mots de passe :</h1>
 	<div class="wrapper">
 		<div></div>
 			<div>
 				<div id="error"> <% out.println( (String) request.getAttribute("erreur")); %></div>
 				<form  action="/E-Shop/Log/NewPassword" method="post">
-				<p> new Password :</p>
+				<p>nouveau mots de passe :</p>
 				<input id="pass" type="password" name="pass">
-				<p>confirmer Password :</p>
+				<p>confirmer mots de passe :</p>
 				<input id="confpass" type="password" name="confpass">
 				<input class="btn"  type="submit" value="Suivant">
 			</form>
@@ -51,7 +51,7 @@
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }

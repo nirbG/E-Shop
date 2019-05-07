@@ -20,7 +20,7 @@
 </div>
 
 <div style="margin:2% 5%">
-	<h1>notre list de produits:</h1>
+	<h1>Nos produits:</h1>
 	<div class="">
   		<% 
   		 out.println((String) request.getAttribute("prods"));
@@ -104,7 +104,7 @@ ul {
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }

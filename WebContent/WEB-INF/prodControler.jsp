@@ -10,13 +10,13 @@
 <body>
 
 <div class="topnav">
-  <a class="active" href="/E-Shop/Log/Admin/ListModProd">Retour</a>
+  <a class="url active" href="/E-Shop/Log/Admin/ListModProd">Retour</a>
   <%
   	out.println((String) request.getAttribute("button"));
   %>
 </div>
 	<div style="margin:2% 5%">
-		<h1> Modifier produit :</h1>
+		<h1> Modifier un produit :</h1>
 		<div class="wrapper">
 			<div></div>
 			<div>
@@ -188,7 +188,7 @@ li a:hover:not(.active) {
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }

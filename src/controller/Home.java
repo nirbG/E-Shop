@@ -47,7 +47,7 @@ public class Home extends HttpServlet {
 				}
 			}
 			request.setAttribute( "button", co );
-			ArrayList<Product> listP=ProductDao.findsome(20);
+			ArrayList<Product> listP=ProductDao.findsome(10);
 			String res="";
 			for (Product p : listP) {
 				res+="<div id='"+p.getId()+"' class='prod'>\r\n"+ 

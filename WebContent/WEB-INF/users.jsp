@@ -21,7 +21,7 @@
 	
   		<h1>Admin : </h1>
   		<div id="" class="wrapperP" >
-  			<a class="btn" href="/E-Shop/Deco">Deconexion</a>
+  			<a class="btn" href="/E-Shop/Deco">Déconnexion</a>
   			<a class='btn' href="/E-Shop/Log/ConfirmerMdp">Modifier mot de passe</a>
   		</div>
 		<div class="wrapper">
@@ -32,12 +32,12 @@
 					<input type="hidden" value="1">
 					<p>Nom* :</p>
 					<input id="nom" type="text" name="nom" value="<% out.println( (String) request.getAttribute("nom")); %>" >
-					<p>Prenom* :</p>
+					<p>Prénom* :</p>
 					<input id="prenom" type="text" name="prenom" value="<% out.println( (String) request.getAttribute("prenom")); %>" >
 					<p>Email* :</p>
 					<input id="email" type="email" name="email" value="<% out.println( (String) request.getAttribute("email")); %>" >
 					<p></p>
-					<div id="modinfo" class="btn" >valider</div>
+					<div id="modinfo" class="btn" >Valider</div>
   			</div>
 			<div id="createUser" >
   				<h1>create user:</h1>
@@ -324,7 +324,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 5px;
-  row-gap: 1em;
+  row-gap: 1px;
 
 }
 
@@ -408,7 +408,7 @@ li a:hover:not(.active) {
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }

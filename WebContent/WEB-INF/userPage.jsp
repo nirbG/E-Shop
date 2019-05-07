@@ -26,15 +26,15 @@
 			<input type="hidden" value="1">
 			<p>Nom* :</p>
 			<input id="nom" type="text" name="nom" value="<% out.println( (String) request.getAttribute("nom")); %>" >
-			<p>Prenom* :</p>
+			<p>Prénom* :</p>
 			<input id="prenom" type="text" name="prenom" value="<% out.println( (String) request.getAttribute("prenom")); %>" >
 			<p>Email* :</p>
 			<input id="email" type="email" name="email" value="<% out.println( (String) request.getAttribute("email")); %>" >
 			<p></p>
-			<div id="modinfo" class="btn" style="width:100%" >valider</div>
+			<div id="modinfo" class="btn" style="width:100%" >Valider</div>
   		</div>
   		<div class='wrapperb'>
-  			<div style="width: 100%; margin-top:2% " class=""><a class='btn' style='width: 100%;' href="/E-Shop/Deco">Deconexion</a></div>
+  			<div style="width: 100%; margin-top:2% " class=""><a class='btn' style='width: 100%;' href="/E-Shop/Deco">Déconnexion</a></div>
   			<div style="width: 100%; margin-top:2% " class=""><a class='btn' style='width: 100%;' href="/E-Shop/Log/ConfirmerMdp">Modifier mot de passe</a></div>
 			<div style="width: 100%; margin-top:2% " class=""><a class='btn' style='width: 100%;' href="/E-Shop/Log/VoirPanier">Vos paniers</a></div>
 		</div>
@@ -137,9 +137,6 @@ window.addEventListener('load', function(e) {
   grid-gap: 10px;
 }
 .wrapperb {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-gap: 10px;
 }
 ul {
   list-style-type: none;
@@ -161,9 +158,7 @@ li a {
   text-decoration: none;
 }
 
-li a:hover:not(.active) {
-  background-color: #111;
-}
+
 input{width:100%}]
 
 .active {
@@ -216,7 +211,7 @@ input{width:100%}]
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }

@@ -17,7 +17,7 @@
   %>
 </div>
 	<div style="margin:2% 5%">
-		<h1> mod users</h1>
+		<h1>modifier un utilisateur</h1>
 		<div class="wrapper">
 		<div></div>
 			<div>
@@ -27,7 +27,7 @@
 					<%out.println(request.getAttribute("id"));%>
 					<p>Nom* :</p>
 					<input id="nom" type="text" name="nom"  value="<% out.println( (String) request.getAttribute("nom")); %>">
-					<p>Prenom* :</p>
+					<p>Prénom* :</p>
 					<input id="prenom" type="text" name="prenom" value="<% out.println( (String) request.getAttribute("prenom")); %>" >
 					<p>Email* :</p>
 					<input id="email" type="email" name="email" value="<% out.println( (String) request.getAttribute("email")); %>">
@@ -172,7 +172,7 @@ ul {
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }

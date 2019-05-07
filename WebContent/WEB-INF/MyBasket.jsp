@@ -17,7 +17,7 @@
 </div>
 
 <div style="margin:2% 5%">
-	<h1>Panier:</h1>
+	<h1>Panier :</h1>
 	<div class="wrapper">
   		<% 
   		 out.println((String) request.getAttribute("prods"));
@@ -27,7 +27,7 @@
 		<a href="<% 
   		 out.println((String) request.getAttribute("url"));
 	  %>"> 
-			<button class="btn">supprimer panier</button>
+			<button class="btn">Supprimer panier</button>
 		</a>
 		<a href="/E-Shop/ValiderPanier"> 
 			<button class="btn">Valider panier</button>
@@ -102,7 +102,7 @@ ul {
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }

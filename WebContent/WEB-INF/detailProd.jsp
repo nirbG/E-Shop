@@ -49,7 +49,7 @@
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }
@@ -82,6 +82,11 @@
   color: black;
 }
 .prix {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 20px;
+}
+.prixbtn {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: 20px;
@@ -130,6 +135,14 @@ li a:hover:not(.active) {
 }
 /* On screens that are 600px or less, set the background color to olive */
 @media screen and (max-width: 600px) {
+.prixbtn {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-auto-rows: 20px;
+}
+.btn{
+	float:right;
+}
 .prod {
 	height: 110px;
 	border: 2px solid black;

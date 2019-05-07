@@ -15,7 +15,7 @@
   %>
 </div>
 	<div style="margin:2% 5%">
-		<h1> Créer produit :</h1>
+		<h1> Créer un produit :</h1>
 		<div class="wrapper">
 			<div></div>
 			<div>
@@ -89,7 +89,7 @@
 			var message = ""; 
 			if(requete.readyState==4){
 				if (requete.status == 200) {
-					document.getElementById("mess").innerHTML = "le produit a été modifier";
+					document.getElementById("mess").innerHTML = "Le produit a été créé";
 
 					setTimeout(function() {
 					  document.getElementById("mess").innerHTML = "";
@@ -175,7 +175,7 @@ ul {
 }
 
 /* Change color on hover */
-.topnav a:hover {
+.topnav .url:hover {
   background-color: #ddd;
   color: black;
 }
