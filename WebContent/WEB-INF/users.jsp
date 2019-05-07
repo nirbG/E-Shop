@@ -8,23 +8,22 @@
 <title>E-Shop</title>
 </head>
 <body>
-<ul>
-  <li><a class="active" href="/E-Shop/">E-Shop</a></li>
-  <li><a href="/E-Shop/ListProducts">Nos produits</a></li>
-  <li><a href="/E-Shop/MyBasket">Votre panier</a></li>
-  <li style="float:right;display:inline-block" >
+
+<div class="topnav">
+  <a class="url active" href="/E-Shop/">E-Shop</a>
+  <a class="url" href="/E-Shop/ListProducts">Nos produits</a>
+  <a class="url" href="/E-Shop/MyBasket">Votre panier</a>
   <%
   	out.println((String) request.getAttribute("button"));
   %>
-  </li>
-</ul>
+</div>
 	<div style="margin:2% 5%">
-		<div>
-  			<div id="" class="btn" >
-  				<a href="/E-Shop/Deco">Deconexion</a>
-  			</div>
+	
+  		<h1>Admin : </h1>
+  		<div id="" class="wrapperP" >
+  			<a class="btn" href="/E-Shop/Deco">Deconexion</a>
+  			<a class='btn' href="/E-Shop/Log/ConfirmerMdp">Modifier mot de passe</a>
   		</div>
-  		<h1>Gestion des utilisateurs : </h1>
 		<div class="wrapper">
 			<div id="forminfo" >
   				<div id="error"></div>
@@ -40,15 +39,6 @@
 					<p></p>
 					<div id="modinfo" class="btn" >valider</div>
   			</div>
-			<div class="table">
-				<h1>Users:</h1>
-				<div>
-	  				<% 
-	  				String tableU = (String) request.getAttribute("users");;
-	 	 			out.println( tableU );
-	  				%>
-				</div>
-			</div>
 			<div id="createUser" >
   				<h1>create user:</h1>
   				<div id="CreateError"></div>
@@ -66,11 +56,26 @@
 				<input id="Cemail" type="email" name="email" ><p></p>
 				<div id="create" class="btn" >create</div>
   			</div>
+  			
+		</div>
+		<div class="table">
+			<h1>Users:</h1>
+			<div style="max-height: 300px;width: 100%;overflow: auto">
+	  			<% 
+	  			String tableU = (String) request.getAttribute("users");;
+	 	 		out.println( tableU );
+	  			%>
+			</div>
 		</div>
 		<h1>Gestion des produits : </h1>
 		<div class="wrapperP">
 			<div class="btn"><a href="/E-Shop/Log/Admin/CreateProd">Créer un produit</a></div>
 			<div class="btn"><a href="/E-Shop/Log/Admin/ListModProd">Modifier ou supprimer un produit</a></div>
+		</div>
+		<h1>Gestion des paniers : </h1>
+		<div class="wrapperP">
+			<div class="btn"><a href="/E-Shop/Log/Admin/listeBasket">Voir les paniers</a></div>
+			<div class="btn"><a href="/E-Shop/Log/VoirPanier">Vos paniers</a></div>
 		</div>
 	</div>
 </body>
@@ -121,7 +126,7 @@
 			};
 			return false;
 		}else{
-			var url = "../ModInfo";
+			var url = "../Log/ModInfo";
 			if (window.XMLHttpRequest) {
 				requete = new XMLHttpRequest();
 			} else if (window.ActiveXObject) {
@@ -192,7 +197,7 @@
 			}
 			return false;
 		}
-		var url = "../ModInfo";
+		var url = "../Log/ModInfo";
 		if (window.XMLHttpRequest) {
 			requete2 = new XMLHttpRequest();
 		} else if (window.ActiveXObject) {
@@ -216,7 +221,7 @@
 					"<td>"+prenom.value+"</td>"+
 					"<td>"+email.value+"</td>"+
 					"<td>1</td>"+
-					"<td class='wrapperbtn'><div class='btn '><a href='/E-Shop/ModInfo?email="+email.value+"'>mod</a></div> <div class='btn suppUser'>supp</div></td>";
+					"<td class='wrapperbtn'><div class='btn '><a href='/E-Shop/Log/ModInfo?email="+email.value+"'>mod</a></div> <div class='btn suppUser'>supp</div></td>";
 					tr.className += "user";
 					tr.setAttribute("id",id);
 					tab.append(tr);
@@ -239,7 +244,7 @@
 	
 	function supp(user){
 		
-		var url = "../ModInfo";
+		var url = "ModInfo";
 		if (window.XMLHttpRequest) {
 			requete = new XMLHttpRequest();
 		} else if (window.ActiveXObject) {
@@ -301,16 +306,12 @@
 <style>
 .wrapper {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   column-gap: 10px;
   row-gap: 1em;
-  max-height: 500px
 
 }
-.wrapper div{
-	max-height: 500px;
-	overflow: auto;
-}
+
 .wrapperP {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -385,6 +386,95 @@ li a:hover:not(.active) {
   a{
   	text-decoration: none !important;
 	color: white;
+}
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Style the topnav links */
+.topnav a {
+  float: right;;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.topnav .url {
+  float: left;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+/* On screens that are 992px or less, set the background color to blue */
+@media screen and (max-width: 992px) {
+.prod {
+	height: 110px;
+	border: 2px solid black;
+  	border-radius: 5px;
+  	background-color: #c0c0c0;
+	 color: black;
+	width: 45%;
+	display: inline-block;
+	margin: 1%;
+}
+
+    .wrapper {
+  	display: grid;
+  	grid-template-columns: repeat(1, 1fr);
+  }
+  .wrapperP {
+  grid-template-columns: repeat(1, 1fr);
+
+}
+
+.wrapperbtn {
+  grid-template-columns: repeat(1, 1fr);
+
+}
+    .btn {
+  	 font-size: 14px;
+  }
+  h3{
+	font-size: 15px;
+}
+
+  
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+.prod {
+	height: 110px;
+	border: 2px solid black;
+  	border-radius: 5px;
+  	background-color: #c0c0c0;
+	 color: black;
+	width: 100%;
+	display: inline-block;
+}
+
+    .topnav a {
+    float: none;
+    width: 100%;
+  }
+  .wrapper {
+  	display: grid;
+  	grid-template-columns: repeat(1, 1fr);
+  }
+    .btn {
+  	 font-size: 10px;
+  }
+  h3{
+	font-size: 16px;
+}
+  
 }
 </style>
 </html>

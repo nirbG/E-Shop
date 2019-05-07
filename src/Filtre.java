@@ -11,6 +11,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import model.User;
 
 /**
  * Servlet Filter implementation class Filtre
@@ -40,8 +43,17 @@ public class Filtre implements Filter {
 		HttpServletRequest httpReq=(HttpServletRequest) request;
 		String referrer =httpReq.getHeader("referer");
 		if(referrer==null) {
+			HttpSession session = ((HttpServletRequest) request).getSession();
+			User user = (User) session.getAttribute( "client" );
+
 			HttpServletResponse httpRep=(HttpServletResponse) response;
-			httpRep.sendRedirect("/E-Shop/Log");
+			if(user==null) {
+				httpRep.sendRedirect("/E-Shop/Log");
+			}else {
+				if(user.getType()==1) {
+					httpRep.sendRedirect("/E-Shop/Log/User");
+    			}
+			}
 		}
 		// pass the request along the filter chain
 		chain.doFilter(request, response);

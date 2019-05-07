@@ -10,13 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.User2panierDao;
 import dao.UserDao;
 import model.User;
 
 /**
  * Servlet implementation class ModInfo
  */
-@WebServlet("/ModInfo")
+@WebServlet("/Log/ModInfo")
 public class ModInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,15 +36,26 @@ public class ModInfo extends HttpServlet {
 		// TODO Auto-generated method stub
 		String e=request.getParameter("email");
 		User u;
-		try {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute( "client" );
+		if(user!=null) {
+			String co ="";
+			if( user.getType()==1) {
+				co="<a class='active' href='/E-Shop/Log/User'>Mon compte</a>";
+			}else {
+				co="<a class='active' href='/E-Shop/Log/Admin'>Mon compte</a>";
+			}
+			request.setAttribute( "button", co );
+			try {
 			u = UserDao.findByEmail(e);
 			request.setAttribute( "id", "<input name='id' type='hidden' value='"+u.getId()+"'>");
 			request.setAttribute( "nom", u.getNom() );
 			request.setAttribute( "prenom", u.getPrenom() );
 			request.setAttribute( "email", u.getEmail());
-		} catch (SQLException e1) {
+			} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			}
 		}
 		this.getServletContext().getRequestDispatcher( "/WEB-INF/modInfo.jsp" ).forward( request, response );
 	}
@@ -88,6 +100,9 @@ public class ModInfo extends HttpServlet {
 		case "4":
 			try {
 				User u=insert(request,  response);
+				if(u!=null) {
+					u.setIdpanier(User2panierDao.newPanier(u.getId()));
+				}
 				response.getWriter().write(u.getId()+"");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -128,6 +143,7 @@ public class ModInfo extends HttpServlet {
 	
 	protected void supp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		String id = request.getParameter("id");
+		User2panierDao.supp(Integer.parseInt(id));
 		UserDao.supp(Integer.parseInt(id));
 	}
 

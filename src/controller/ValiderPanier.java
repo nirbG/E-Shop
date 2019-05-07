@@ -10,20 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 import dao.User2panierDao;
-import dao.UserDao;
+import model.User;
 
 /**
- * Servlet implementation class Sinscire
+ * Servlet implementation class ValiderPanier
  */
-@WebServlet("/Inscription")
-public class Inscription extends HttpServlet {
+@WebServlet("/ValiderPanier")
+public class ValiderPanier extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Inscription() {
+    public ValiderPanier() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,32 +34,27 @@ public class Inscription extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		// On supprime les objetdu panier 
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute( "client" );
+		if(user!=null) {
+			try {
+				user.setIdpanier(User2panierDao.valider(user.getId()));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+		}
+		// Retour au home 
+		response.sendRedirect("/E-Shop/Home");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("action");
-		response.setContentType("text/xml");
-		response.setHeader("Cache-Control", "no-cache");
-		switch (id) {
-		case "1"://insert user
-			model.User u=null;
-			try {
-				u = UserDao.insert(request.getParameter("nom"),request.getParameter("prenom"),request.getParameter("password"),request.getParameter("email"));
-				if(u!=null) {
-					u.setIdpanier(User2panierDao.newPanier(u.getId()));
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-	    	HttpSession session = request.getSession();
-			session.setAttribute( "client", u );
-	    	response.sendRedirect("/E-Shop/Log/User");
-		}
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

@@ -23,7 +23,8 @@ public class UserDao {
 		Connection connexion =ConnexionBDD.getInstance().getCnx(); 
         /* Création de l'objet gérant les requêtes */
 		Statement statement = connexion.createStatement();
-		resultat = statement.executeQuery( "SELECT id, nom, prenom, password, email, type FROM utilisateur ;" );
+		resultat = statement.executeQuery( "SELECT id, nom, prenom, password, email, type, idpanier FROM utilisateur inner join user2panier "
+				+ " where utilisateur.id=user2panier.iduser  and user2panier.valider=0 ;" );
 		 while ( resultat.next() ) {
         	 int idUtilisateur = resultat.getInt( "id" );
              String nomUtilisateur = resultat.getString( "nom" );
@@ -31,7 +32,8 @@ public class UserDao {
              String pwd = resultat.getString( "password" );
              String emailUtilisateur = resultat.getString( "email" );
              int typeUtilisateur = resultat.getInt( "type" );
-             listU.add(new User(idUtilisateur, nomUtilisateur, prenomUtilisateur, emailUtilisateur, pwd,typeUtilisateur));
+             int idpanier = resultat.getInt( "idpanier" );
+             listU.add(new User(idUtilisateur, nomUtilisateur, prenomUtilisateur, emailUtilisateur, pwd,typeUtilisateur,idpanier));
              /* Formatage des données pour affichage dans la JSP finale. */
         }
 		return listU;
@@ -49,6 +51,55 @@ public class UserDao {
 		Connection connexion =ConnexionBDD.getInstance().getCnx(); 
          /* Création de l'objet gérant les requêtes */
 		Statement statement = connexion.createStatement();
+		resultat = statement.executeQuery( "SELECT id, nom, prenom, password, email,type, idpanier FROM utilisateur inner join user2panier"
+				+ " where utilisateur.id=user2panier.iduser  and user2panier.valider=0 AND email='"+e+"' ;" );
+		 while ( resultat.next() ) {
+        	 int idUtilisateur = resultat.getInt( "id" );
+             String nomUtilisateur = resultat.getString( "nom" );
+             String prenomUtilisateur = resultat.getString( "prenom" );
+             String pwd = resultat.getString( "password" );
+             String emailUtilisateur = resultat.getString( "email" );
+             int typeUtilisateur = resultat.getInt( "type" );
+             int idpanier = resultat.getInt( "idpanier" );
+             u=new User(idUtilisateur, nomUtilisateur, prenomUtilisateur, emailUtilisateur, pwd,typeUtilisateur,idpanier);
+             /* Formatage des données pour affichage dans la JSP finale. */
+        }
+		return u;
+		
+	}
+	/*
+	 * trouve un User selon son email qui est unique
+	 * 
+	 * @return User
+	 */
+	public static User findById(int id) throws SQLException {
+		User u=null;
+        ResultSet resultat = null;
+		Connection connexion =ConnexionBDD.getInstance().getCnx(); 
+         /* Création de l'objet gérant les requêtes */
+		Statement statement = connexion.createStatement();
+		resultat = statement.executeQuery( "SELECT id, nom, prenom, password, email,type, idpanier FROM utilisateur inner join user2panier"
+				+ " where utilisateur.id=user2panier.iduser  and user2panier.valider=0 AND id='"+id+"' ;" );
+		 while ( resultat.next() ) {
+        	 int idUtilisateur = resultat.getInt( "id" );
+             String nomUtilisateur = resultat.getString( "nom" );
+             String prenomUtilisateur = resultat.getString( "prenom" );
+             String pwd = resultat.getString( "password" );
+             String emailUtilisateur = resultat.getString( "email" );
+             int typeUtilisateur = resultat.getInt( "type" );
+             int idpanier = resultat.getInt( "idpanier" );
+             u=new User(idUtilisateur, nomUtilisateur, prenomUtilisateur, emailUtilisateur, pwd,typeUtilisateur,idpanier);
+             /* Formatage des données pour affichage dans la JSP finale. */
+        }
+		return u;
+		
+	}
+	public static User findByEmailwhiyhoutpanier(String e) throws SQLException {
+		User u=null;
+        ResultSet resultat = null;
+		Connection connexion =ConnexionBDD.getInstance().getCnx(); 
+         /* Création de l'objet gérant les requêtes */
+		Statement statement = connexion.createStatement();
 		resultat = statement.executeQuery( "SELECT id, nom, prenom, password, email,type FROM utilisateur where email='"+e+"' ;" );
 		 while ( resultat.next() ) {
         	 int idUtilisateur = resultat.getInt( "id" );
@@ -57,11 +108,10 @@ public class UserDao {
              String pwd = resultat.getString( "password" );
              String emailUtilisateur = resultat.getString( "email" );
              int typeUtilisateur = resultat.getInt( "type" );
-             u=new User(idUtilisateur, nomUtilisateur, prenomUtilisateur, emailUtilisateur, pwd,typeUtilisateur);
+             u=new User(idUtilisateur, nomUtilisateur, prenomUtilisateur, emailUtilisateur, pwd,typeUtilisateur,-1);
              /* Formatage des données pour affichage dans la JSP finale. */
         }
 		return u;
-		
 	}
 	
 	/*
@@ -84,7 +134,7 @@ public class UserDao {
 		preparedStatement.setString(4, e);
 		// execute insert SQL stetement
 		preparedStatement.executeUpdate();
-		return findByEmail(e);
+		return findByEmailwhiyhoutpanier(e);
 		
 	}
 	
@@ -106,6 +156,24 @@ public class UserDao {
 		// execute insert SQL stetement
 		preparedStatement.executeUpdate();
 		return findByEmail(e);
+	}
+	
+	/*
+	 * modifier un unser
+	 * 
+	 * @return User
+	 */
+	public static void updatePassword(int id,String p) throws SQLException {
+		
+		Connection connexion =ConnexionBDD.getInstance().getCnx(); 
+         /* Création de l'objet gérant les requêtes */
+		String insertTableSQL = "update utilisateur set password = ? where id = ?";
+		PreparedStatement preparedStatement = connexion.prepareStatement(insertTableSQL);
+		preparedStatement.setString(1, p);
+		preparedStatement.setInt(2, id);
+		// execute insert SQL stetement
+		preparedStatement.executeUpdate();
+		
 	}
 	
 	/*

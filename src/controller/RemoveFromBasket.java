@@ -39,39 +39,59 @@ public class RemoveFromBasket extends HttpServlet {
 		// Recuperation de l'utilisateur 
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute( "client" );
-		int idU = user.getId();
-
-		// Recuperation du produit a supprimer du panier
-		int idPr = Integer.parseInt(request.getParameter("idprod"));
-
-		// Recuperer l'id du panier 
-		ArrayList<Basket> lpuser;
-		try {
-			lpuser = BasketDao.findByUser(idU);
-			int idPa;
-			if (lpuser.size() == 0) {
-				idPa = BasketDao.newPanier();
-			} else {
-				idPa = lpuser.get(0).getIdpanier();
+		String a= request.getParameter("action");
+		switch(a) {
+		case "1":
+			try {
+				BasketDao.supp(user.getIdpanier());
+			} catch (NumberFormatException | SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-			
-			if (idPr == -1) { // Vidage de panier 
-				// On supprime les objetdu panier 
-				BasketDao.supp(idPa);
-				
-				// Retour au home 
-				response.sendRedirect("/E-Shop/Home");
-			} else { // Suppression objet du panier 
-				// On dupprime l'objet
-				BasketDao.suppProduct(idPa, idPr);
-
-				// Retour au panier 
+			response.sendRedirect("/E-Shop/Home");
+			break;
+		case "2":
+			int idPr = Integer.parseInt(request.getParameter("idprod"));
+			try {
+				BasketDao.suppProduct(user.getIdpanier(), idPr);
 				response.sendRedirect("/E-Shop/MyBasket");
+			} catch (NumberFormatException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			break;
+		case "3":
+			System.out.println("min");
+			int idProd = Integer.parseInt(request.getParameter("idprod"));
+			ArrayList<Basket> lpuser;
+			try {
+				lpuser = BasketDao.findByProduct(user.getIdpanier(), idProd);
+				if(lpuser.get(0).getQuantite()>1) {
+					b = new Basket(user.getIdpanier(), idProd, lpuser.get(0).getQuantite() - 1);
+					BasketDao.update(user.getIdpanier(), b.getIdproduit(), b.getQuantite());
+				}else {
+					BasketDao.suppProduct(user.getIdpanier(), idProd);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			response.sendRedirect("/E-Shop/MyBasket");
+			break;
+		case "4":
+			System.out.println("add");
+			int idProduc = Integer.parseInt(request.getParameter("idprod"));
+			ArrayList<Basket> lpuseradd;
+			try {
+				lpuseradd = BasketDao.findByProduct(user.getIdpanier(), idProduc);
+				b = new Basket(user.getIdpanier(), idProduc, lpuseradd.get(0).getQuantite() + 1);
+				BasketDao.update(user.getIdpanier(), b.getIdproduit(), b.getQuantite());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			response.sendRedirect("/E-Shop/MyBasket");
+			break;
 		}
 	}
 

@@ -11,21 +11,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.BasketDao;
 import dao.ProductDao;
+import dao.User2panierDao;
+import dao.UserDao;
+import model.Basket;
 import model.Product;
 import model.User;
+import model.User2panier;
 
 /**
- * Servlet implementation class ListProducts
+ * Servlet implementation class DetailBasket
  */
-@WebServlet("/ListProducts")
-public class ListProducts extends HttpServlet {
+@WebServlet("/Log/Admin/Basket")
+public class DetailBasket extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListProducts() {
+    public DetailBasket() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,33 +49,42 @@ public class ListProducts extends HttpServlet {
 				}else {
 					co="<a class='active' href='/E-Shop/Log/Admin'>Mon compte</a>";
 				}
-				
+			} else {
+				response.sendRedirect("/E-Shop/Log");
 			}
+
+			request.setAttribute( "url", "/E-Shop/Log/Admin/listeBasket" );
 			request.setAttribute( "button", co );
-			ArrayList<Product> listP=ProductDao.findAll();
+			String idpanier = request.getParameter("idpanier");
+			ArrayList<Basket> listP=BasketDao.findById(Integer.parseInt(idpanier));
+			User2panier user2p=User2panierDao.findByIdpanier(Integer.parseInt(idpanier));
+			User u=UserDao.findById(user2p.getIduser());
 			String res="";
-			for (Product p : listP) {
+			float prix=0;
+			for (Basket basket : listP) {
+				Product p = ProductDao.find(basket.getIdproduit());
 				res+="<div id='"+p.getId()+"' class='prod'>\r\n"+ 
-						"	<div class='photo'></div>\r\n" +
-						"	<div class='corp'>"+
-						"  		<div class='h2-overflow'><a href='/E-Shop/DetailProduct?idprod="+p.getId()+"'>"+p.getNom()+"</a></div>\r\n" + 
-						"  		<div class='prix'>\r\n" + 
+						"	<div class='corp' style='width:100%' >"+
+						"  		<div class='h2-overflow' style='font-size:20px'><a href='/E-Shop/DetailProduct?idprod="+p.getId()+"'>"+p.getNom()+"</a></div>\r\n" + 
+						"  		<div class='prix' style='float:right' >\r\n" + 
 						"  			<div>prix:"+p.getPrix()+"€</div>\r\n" + 
-						"  			<div >\r\n" +
-						"				<a href=\"/E-Shop/AddToBasket?idprod=" + p.getId() + "\">" + 
-						"  					<button class=\"btn\" style=\"float: inline-end;\">Ajouter au panier</button>\r\n" + 
-						" 				</a>" +
-						"  			</div>\r\n" + 
+						"			<br>" +
+						"			<div>quantite:"+
+						"        		"+basket.getQuantite()+
+						"			</div>\r\n" +	
 						"  		</div>\r\n" + 
 						"	</div>\r\n" + 
 						"</div>";
+				prix+=p.getPrix()*basket.getQuantite();
 			}
 			request.setAttribute( "prods", res );
+			request.setAttribute( "user", u.getEmail() );
+			request.setAttribute( "prix", prix+"€" );
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.getServletContext().getRequestDispatcher( "/WEB-INF/listProds.jsp" ).forward( request, response );
+		this.getServletContext().getRequestDispatcher( "/WEB-INF/MyBasketAdmin.jsp" ).forward( request, response );
 	}
 
 	/**

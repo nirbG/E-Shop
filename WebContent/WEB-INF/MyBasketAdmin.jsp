@@ -7,80 +7,25 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 <div class="topnav">
-  <a class="url active" href="/E-Shop/">E-Shop</a>
-  <a class="url" href="/E-Shop/ListProducts">Nos produits</a>
-  <a class="url" href="/E-Shop/MyBasket">Votre panier</a>
+  <a class="active" href="  <%
+  	out.println((String) request.getAttribute("url"));
+  %>">Retour</a>
   <%
   	out.println((String) request.getAttribute("button"));
   %>
 </div>
-
 <div style="margin:2% 5%">
-	<h1>Panier:</h1>
+	<h1>Panier : <% out.println((String) request.getAttribute("user")); %></h1>
 	<div class="wrapper">
   		<% 
   		 out.println((String) request.getAttribute("prods"));
 	  %>
 	</div>
-	<div>
-		<a href="<% 
-  		 out.println((String) request.getAttribute("url"));
-	  %>"> 
-			<button class="btn">supprimer panier</button>
-		</a>
-		<a href="/E-Shop/ValiderPanier"> 
-			<button class="btn">Valider panier</button>
-		</a>
-	</div>
+	<h2>prix : <% out.println((String) request.getAttribute("prix")); %></h2>
 </div>
 <style>
-form{
-margin: 25% 2%;
-}
-
-.wrapper {
-  display: grid;
-  column-gap: 10px;
-  row-gap: 1em;
-
-}
-* {box-sizing: border-box;}
-
-.wrapper {
-  grid-column-gap: 10px;
-  grid-row-gap: 1em;
-  border-radius: 5px;
-  border: 2px solid #000000;
-  background-color: #c0c0c0;
-}
-
-
-
-.prod {
-	height: 110px;
-	border: 2px solid black;
-  	border-radius: 5px;
-  	background-color: #c0c0c0;
-	color: black;
-	width: 30%;
-	display: inline-block;
-	margin: 1%;
-}
-
-
-.prix {
-  width: 50%;
-display: inline-block;
-}
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
-
 /* Style the top navigation bar */
 .topnav {
   overflow: hidden;
@@ -106,6 +51,68 @@ ul {
   background-color: #ddd;
   color: black;
 }
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  column-gap: 10px;
+  row-gap: 1em;
+
+}
+* {box-sizing: border-box;}
+
+.wrapper {
+  grid-column-gap: 10px;
+  grid-row-gap: 1em;
+
+  border: 2px solid #000000;
+  border-radius: 5px;
+  background-color: #c0c0c0;
+}
+
+
+.prod {
+  display: grid;
+	height:110px;
+}
+.prod div:nth-child(1) {	
+	grid-column: 1;
+	grid-row: 1;
+}
+.prod div:nth-child(2) {
+	grid-column: 2;
+	grid-row: 1;
+	grid-column-end: 5;
+}
+
+
+.prix {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 20px;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
 
 .active {
   background-color: #c0c0c0 ;
@@ -125,34 +132,6 @@ ul {
   	text-decoration: none !important;
 	color: white;
 }
-.h2-overflow {
-    overflow: hidden;
-    white-space: nowrap;
-    width: 90% !important;
-    text-overflow: ellipsis;
-    font-size: 20px;
-}
-
-.photo{
-border: 1px solid;
-
-margin: 3%;
-
-border-radius: 5px;
-
-width: 10%;
-
-display: inline-block;
-
-height: 80px;
-
-float: left;
-}
-.corp{
-width: 80%;
-display: inline-block;
-}
-
 /* On screens that are 992px or less, set the background color to blue */
 @media screen and (max-width: 992px) {
 .prod {
@@ -168,7 +147,7 @@ display: inline-block;
 
     .wrapper {
   	display: grid;
-  	grid-template-columns: repeat(1, 1fr);
+  	grid-template-columns: repeat(2, 1fr);
   }
     .btn {
   	 font-size: 14px;

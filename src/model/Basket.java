@@ -2,14 +2,12 @@ package model;
 
 public class Basket {
 	private int idpanier;
-	private int iduser;
 	private int idproduit;
 	private int quantite;
 	
-	public Basket(int idpanier, int iduser, int idproduit, int quantite) {
+	public Basket(int idpanier, int idproduit, int quantite) {
 		super();
 		this.idpanier = idpanier;
-		this.iduser = iduser;
 		this.idproduit = idproduit;
 		this.quantite = quantite;
 	}
@@ -20,14 +18,6 @@ public class Basket {
 
 	public void setIdpanier(int idpanier) {
 		this.idpanier = idpanier;
-	}
-
-	public int getIduser() {
-		return iduser;
-	}
-
-	public void setIduser(int iduser) {
-		this.iduser = iduser;
 	}
 
 	public int getIdproduit() {

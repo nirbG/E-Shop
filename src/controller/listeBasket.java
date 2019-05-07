@@ -11,21 +11,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.ProductDao;
+import dao.BasketDao;
+import dao.User2panierDao;
+import dao.UserDao;
 import model.Product;
 import model.User;
+import model.User2panier;
 
 /**
- * Servlet implementation class ListProducts
+ * Servlet implementation class lusteBasket
  */
-@WebServlet("/Log/Admin/ListModProd")
-public class ListModProd extends HttpServlet {
+@WebServlet("/Log/Admin/listeBasket")
+public class listeBasket extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListModProd() {
+    public listeBasket() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,20 +45,23 @@ public class ListModProd extends HttpServlet {
 				if( user.getType()==2) {
 					co="<a class='active' href='/E-Shop/Log/Admin'>Mon compte</a>";
 					request.setAttribute( "button", co );
+					request.setAttribute( "title", "Tous les paniers :" );
 					request.setAttribute( "url", "/E-Shop/Log/Admin" );
-					request.setAttribute( "title", "Modifier ou supprimer un produit :" );
-					ArrayList<Product> listP=ProductDao.findAll();
+					ArrayList<User2panier> listP=User2panierDao.findAll();
 					String res="";
-					for (Product p : listP) {
-						res+="<div id='"+p.getId()+"' class='prod'>\r\n"+ 
-								"	<div class='photo'></div>\r\n" +
+					for (User2panier p : listP) {
+						User u=UserDao.findById( p.getIduser());
+						float prix=BasketDao.getPrice(p.getIdpanier());
+						String valider="<div class='photo' style=' background-color:orange;'></div>";
+						if(p.getValider()==1) {
+							 valider="<div class='photo'style=' background-color:green;'></div>";	
+						}
+						res+="<div id='"+p.getIdpanier()+"' class='prod'>\r\n"+ 
+								valider +
 								"	<div class='corp'>"+
-								"  		<div class='h2-overflow'><a href='/E-Shop/Log/Admin/ProdControler?idprod="+p.getId()+"'>"+p.getNom()+"</a></div> \r\n" + 
-								"		<div class='prix'>\r\n" + 
-								"  			<div>prix:"+p.getPrix()+"€</div>\r\n" + 
-								"  			<div >\r\n" + 
-								"  				<div class='btn suppProd' style='float: inline-end;'>supp le produit</div>\r\n" + 
-								"  			</div>\r\n" + 
+								"  		<div class='h2-overflow'><a href='/E-Shop/Log/Admin/Basket?idpanier="+p.getIdpanier()+"'>"+u.getEmail()+"</a></div>\r\n" + 
+								"  		<div class='prix'>\r\n" + 
+								"  			<div>prix:"+prix+"€</div>\r\n" + 
 								"  		</div>\r\n" + 
 								"	</div>\r\n" + 
 								"</div>";

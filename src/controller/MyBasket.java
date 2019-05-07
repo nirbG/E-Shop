@@ -51,29 +51,38 @@ public class MyBasket extends HttpServlet {
 				response.sendRedirect("/E-Shop/Log");
 			}
 			request.setAttribute( "button", co );
-			ArrayList<Basket> listP=BasketDao.findByUser(user.getId());
+			
+			ArrayList<Basket> listP=BasketDao.findById(user.getIdpanier());
 
 			String res="";
 			for (Basket basket : listP) {
 				Product p = ProductDao.find(basket.getIdproduit());
-				res+="<div id='"+p.getId()+"' class='prod'>\r\n"+ 
-						"	<div style='border: 1px solid;margin: 3%; border-radius: 5px;'>photo</div>\r\n" +
-						"	<div>"+
-						"  		<h3 style='magin-bottom:0px'>"+"<a href='/E-Shop/DetailProduct?idprod="+p.getId()+"'>"+p.getNom()+"</a></h3>\r\n" + 
-						"  		<div class='prix'>\r\n" + 
-						"  			<div>prix:"+p.getPrix()+"€</div>\r\n" + 
-						"			<br>" +
-						"			<div>quantite:" + basket.getQuantite() + "</div>\r\n" +	
-						"  			<div >\r\n" + 
-						"				<a href=\"/E-Shop/RemoveFromBasket?idprod=" + p.getId() + "\">" + 
+				res+="<div id='"+p.getId()+"' style='padding:1%'class=''>\r\n"+ 
+						"	<div class='corp' style='width:100%' >"+
+						"  		<div class='h2-overflow' style='font-size:20px'><a href='/E-Shop/DetailProduct?idprod="+p.getId()+"'>"+p.getNom()+"</a></div>\r\n" + 
+						"  		<div class='prix' style='float:left' >\r\n" + 
+						"  			<div>prix:"+p.getPrix()+"€</div>\r\n" +
+						"			<div>quantite:"+
+						"        		"+basket.getQuantite()+
+						"			</div>\r\n" +	
+						"  		</div>\r\n" + 
+						"		<div style='width: 50%;display: inline-block;' >\r\n" + 
+						"				<a style='margin:2%' href=\"/E-Shop/RemoveFromBasket?action=4&idprod="+p.getId()+"\">"+ 
+						"				 	<button class='btn' style='float: inline-end;'>+</button>"+ 
+						"				</a>"+
+						"				<a style='margin:2%' href=\"/E-Shop/RemoveFromBasket?action=3&idprod="+p.getId()+"\">"+ 
+						"				 	<button class='btn' style='float: inline-end;'>-</button>"+ 
+						"				</a>"+
+						"				<a style='margin:2%' href=\"/E-Shop/RemoveFromBasket?action=2&idprod="+p.getId()+"\">" + 
 						"  					<button class=\"btn\" style=\"float: inline-end;\">Supprimer</button>\r\n" + 
 						" 				</a>" +
-						"  			</div>\r\n" + 
-						"  		</div>\r\n" + 
+						"  			</div>\r\n" +
 						"	</div>\r\n" + 
 						"</div>";
 			}
 			request.setAttribute( "prods", res );
+			
+			request.setAttribute("url","/E-Shop/RemoveFromBasket?action=1&idpanier="+user.getIdpanier()+"&idprod=-1" );
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

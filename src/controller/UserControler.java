@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.User2panierDao;
 import dao.UserDao;
 import model.User;
 
@@ -37,7 +38,7 @@ public class UserControler extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		String tableU="<table ><tbody id='tab'><tr>"+
+		String tableU="<table style='width:100%;' ><tbody id='tab'><tr>"+
 				"<td>Id</td>"+
 				"<td>Nom</td>"+
 				"<td>Prenom</td>"+
@@ -68,7 +69,7 @@ public class UserControler extends HttpServlet {
 								"<td>"+u.getPrenom()+"</td>"+
 								"<td>"+u.getEmail()+"</td>"+
 								"<td>"+u.getType()+"</td>"+
-								"<td class='wrapperbtn'><div class='btn '><a href='/E-Shop/ModInfo?email="+u.getEmail()+"'>mod</a></div>"+btnSupp+"</td>"+
+								"<td class='wrapperbtn'><div class='btn '><a href='/E-Shop/Log/ModInfo?email="+u.getEmail()+"'>mod</a></div>"+btnSupp+"</td>"+
 								"</tr>";
 					}
 				}
@@ -77,6 +78,8 @@ public class UserControler extends HttpServlet {
 				request.setAttribute( "email", user.getEmail());
 				request.setAttribute( "users", tableU+"</tbody></table>" );
 				this.getServletContext().getRequestDispatcher( "/WEB-INF/users.jsp" ).forward( request, response );
+			}else{
+				response.sendRedirect("/E-Shop/Log");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -88,36 +91,6 @@ public class UserControler extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String id = request.getParameter("action");
-		response.setContentType("text/xml");
-		response.setHeader("Cache-Control", "no-cache");
-		switch (id) {
-		case "1":
-			model.User u=null;
-			try {
-				u = UserDao.insert(request.getParameter("nom"),request.getParameter("prenom"),request.getParameter("password"),request.getParameter("email"));
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			String s="<td>"+u.getId()+"</td>"
-					+"<td>"+u.getNom()+"</td>"
-					+"<td>"+u.getPrenom()+"</td>"
-					+"<td>"+u.getEmail()+"</td>"
-					+"<td><a href=''> mod </a> <a href=''> supp </a></td>";
-			response.getWriter().write(s);
-			break;
-		case "2":
-			response.getWriter().write("<message style='color:red'>!!le champ password est vide!!</message>");
-			break;
-		case "3":
-			response.getWriter().write("<message style='color:red'>!!le champ password est vide!!</message>");
-			break;
-
-		default:
-			break;
-		}
 	}
 
 }

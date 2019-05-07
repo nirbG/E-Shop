@@ -38,22 +38,28 @@ public class UserPage extends HttpServlet {
 		User user = (User) session.getAttribute( "client" );
 		
 		if(user!=null) {
-			String res="<div class='prod'>"
+			if(user.getType()==1) {
+				String res="<div class='prod'>"
 					+ user.getNom()+","+user.getPrenom()
 					+ "</div>" ;
-			request.setAttribute( "compte", res );
-			String co="<a class='active' href='/E-Shop/Log'>Me connecter</a>";
-			if( user.getType()==1) {
-				co="<a class='active' href='/E-Shop/Log/User'>Mon compte</a>";
+				request.setAttribute( "compte", res );
+				String co="<a class='active' href='/E-Shop/Log'>Me connecter</a>";
+				if( user.getType()==1) {
+					co="<a class='active' href='/E-Shop/Log/User'>Mon compte</a>";
+				}else {
+					co="<a class='active' href='/E-Shop/Log/Admin'>Mon compte</a>";
+				}
+				request.setAttribute( "button", co );
+				request.setAttribute( "nom", user.getNom() );
+				request.setAttribute( "prenom", user.getPrenom() );
+				request.setAttribute( "email", user.getEmail());
+				this.getServletContext().getRequestDispatcher( "/WEB-INF/userPage.jsp" ).forward( request, response );
 			}else {
-				co="<a class='active' href='/E-Shop/Log/Admin'>Mon compte</a>";
+				response.sendRedirect("/E-Shop/Log/Admin");
 			}
-			request.setAttribute( "button", co );
-			request.setAttribute( "nom", user.getNom() );
-			request.setAttribute( "prenom", user.getPrenom() );
-			request.setAttribute( "email", user.getEmail());
-			this.getServletContext().getRequestDispatcher( "/WEB-INF/userPage.jsp" ).forward( request, response );
-		}		
+		}else{
+			response.sendRedirect("/E-Shop/Log");
+		}	
 	}
 
 	/**

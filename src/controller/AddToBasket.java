@@ -47,22 +47,15 @@ public class AddToBasket extends HttpServlet {
 		// Recuperer l'id du panier 
 		ArrayList<Basket> lpuser;
 		try {
-			lpuser = BasketDao.findByUser(idU);
-			int idPa;
-			if (lpuser.size() == 0) {
-				idPa = BasketDao.newPanier();
-			} else {
-				idPa = lpuser.get(0).getIdpanier();
-			}
-			
+
 			// On regarde si l'utilisateur a deja le produit dans son panier
-			lpuser = BasketDao.findByProductUser(idU, idPr);
+			lpuser = BasketDao.findByProduct(user.getIdpanier(), idPr);
 			if (lpuser.size() == 0) {
-				b = new Basket(idPa, user.getId(), idPr, 1);
-				BasketDao.insert(b.getIdpanier(), b.getIduser(), b.getIdproduit(), b.getQuantite());
+				b = new Basket(user.getIdpanier(), idPr, 1);
+				BasketDao.insert(user.getIdpanier(), b.getIdproduit(), b.getQuantite());
 			} else {
-				b = new Basket(idPa, user.getId(), idPr, lpuser.get(0).getQuantite() + 1);
-				BasketDao.update(b.getIdpanier(), b.getIduser(), b.getIdproduit(), b.getQuantite());
+				b = new Basket(user.getIdpanier(), idPr, lpuser.get(0).getQuantite() + 1);
+				BasketDao.update(user.getIdpanier(), b.getIdproduit(), b.getQuantite());
 				
 			}
 			

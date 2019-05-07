@@ -8,19 +8,18 @@
 <title>E-SHop</title>
 </head>
 <body>
-<ul>
-  <li><a class="active" href="/E-Shop/Log/Admin/ListModProd">Retour</a></li>
-  <li style="float:right;display:inline-block" >
+
+<div class="topnav">
+  <a class="active" href="/E-Shop/Log/Admin/ListModProd">Retour</a>
   <%
   	out.println((String) request.getAttribute("button"));
   %>
-  </li>
-</ul>
+</div>
 	<div style="margin:2% 5%">
+		<h1> Modifier produit :</h1>
 		<div class="wrapper">
 			<div></div>
 			<div>
-				<h1> Modifier produit :</h1>
 				<div id="error"></div>
 				<div id="mess" style="color : green"></div>
 				<input name="action" type="hidden" value="1">
@@ -34,7 +33,7 @@
 				<p>prix * :</p>
 				<% out.println(request.getAttribute("prix")); %>
 				<p></p>
-				<div id="modifier" class="btn" >modifier</div>
+				<div id="modifier" class="btn" style="width:100%" >modifier</div>
 			</div>
 		</div>
 	</div>
@@ -167,6 +166,89 @@ li a:hover:not(.active) {
     a{
   	text-decoration: none !important;
 	color: white;
+}
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Style the topnav links */
+.topnav a {
+  float: right;;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.topnav .url {
+  float: left;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+/* On screens that are 992px or less, set the background color to blue */
+@media screen and (max-width: 992px) {
+.prod {
+	height: 110px;
+	border: 2px solid black;
+  	border-radius: 5px;
+  	background-color: #c0c0c0;
+	 color: black;
+	width: 45%;
+	display: inline-block;
+	margin: 1%;
+}
+
+  form{
+  text-align:center;
+  }
+    .wrapper {
+  	display: grid;
+  	grid-template-columns: repeat(1, 1fr);
+  }
+    .btn {
+  	 font-size: 14px;
+  	 padding-left: 0%;
+  	 padding-right: 0%;
+  }
+  h3{
+	font-size: 15px;
+}
+
+  
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+.prod {
+	height: 110px;
+	border: 2px solid black;
+  	border-radius: 5px;
+  	background-color: #c0c0c0;
+	 color: black;
+	width: 100%;
+	display: inline-block;
+}
+
+    .topnav a {
+    float: none;
+    width: 100%;
+  }
+  .wrapper {
+  	display: grid;
+  	grid-template-columns: repeat(1, 1fr);
+  }
+    .btn {
+  	 font-size: 10px;
+  }
+  h3{
+	font-size: 16px;
 }
 </style>
 </html>

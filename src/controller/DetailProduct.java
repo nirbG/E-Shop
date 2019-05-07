@@ -52,13 +52,17 @@ public class DetailProduct extends HttpServlet {
 				Product p=ProductDao.find(Integer.parseInt(id));
 				if(p!=null) {
 				String res="<div id='"+p.getId()+"' class='prod'>\r\n" + 
-						"  			<h3 style='magin-bottom:0px'>"+p.getNom()+"</h3>\r\n" +
-						"			<div>"+p.getDescription()+"</div>" + 
 						"  			<div class='prix'>\r\n" + 
-						"  				<div>prix:"+p.getPrix()+"€</div>\r\n" + 
-						"  				<div >\r\n" + 
+						"  			<h3 style='margin:0%'>"+p.getNom()+"</h3>\r\n" +
+						"  				<div style='text-align:end'>prix:"+p.getPrix()+"€</div>\r\n" +  
+						"  			</div>\r\n" + 
+						"  			<div class='prix'>\r\n" + 
+						"				<div id='desc'>"+p.getDescription()+"</div>" + 
+						"			<div >\r\n" + 
+						"				<a href=\"/E-Shop/AddToBasket?idprod=" + p.getId() + "\">" + 
 						"  					<button class=\"btn\" style=\"float: inline-end;\">Ajouter au panier</button>\r\n" + 
-						"  				</div>\r\n" + 
+						"				</a>"+		
+						"  			</div>\r\n" +
 						"  			</div>\r\n" + 
 						"  		</div>";
 				request.setAttribute( "prod", res );

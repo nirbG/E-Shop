@@ -51,13 +51,15 @@ public class Home extends HttpServlet {
 			String res="";
 			for (Product p : listP) {
 				res+="<div id='"+p.getId()+"' class='prod'>\r\n"+ 
-						"	<div style='border: 1px solid;margin: 3%; border-radius: 5px;'>photo</div>\r\n" +
-						"	<div>"+
-						"  		<h3 style='magin-bottom:0px'>"+"<a href='/E-Shop/DetailProduct?idprod="+p.getId()+"'>"+p.getNom()+"</a></h3>\r\n" + 
+						"	<div class='photo'></div>\r\n" +
+						"	<div class='corp' >"+
+						"  		<div class='h2-overflow'><a href='/E-Shop/DetailProduct?idprod="+p.getId()+"'>"+p.getNom()+"</a></div>\r\n" + 
 						"  		<div class='prix'>\r\n" + 
 						"  			<div>prix:"+p.getPrix()+"€</div>\r\n" + 
 						"  			<div >\r\n" + 
-						"  				<button class=\"btn\" style=\"float: inline-end;\">Ajouter au panier</button>\r\n" + 
+						"				<a href=\"/E-Shop/AddToBasket?idprod=" + p.getId() + "\">" + 
+						"  					<button class=\"btn\" style=\"float: inline-end;\">Ajouter au panier</button>\r\n" + 
+						"				</a>"+		
 						"  			</div>\r\n" + 
 						"  		</div>\r\n" + 
 						"	</div>\r\n" + 

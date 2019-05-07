@@ -7,78 +7,22 @@
 <title>E-Shop</title>
 </head>
 <body>
-<script type="text/javascript">
-	function valider(){
-		console.log("a");
-		var id = document.getElementById("id");
-		var pass = document.getElementById("pass");
-		var iderror=0;
-		var bool=true;
-		console.log(id.value);
-		console.log(pass.value);
-		if(id.value==""){
-			bool=false;
-			iderror=1;
-		}
-		if(pass.value==""){
-			bool=false;
-			iderror=2
-		}
-		if(pass.value=="" && id.value==""){
-			bool=false;
-			iderror=3
-		}
-		if(!bool){
-			var url = "LogError";
-			if (window.XMLHttpRequest) {
-				requete = new XMLHttpRequest();
-			} else if (window.ActiveXObject) {
-				requete = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-			requete.open("POST", url, true);
-			requete.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
-			requete.send('idError='+iderror);
-			requete.onreadystatechange =majIHM;
-			return true;
-		}
-		return true;
-	}
-	function majIHM() {
-		var message = ""; 
-		if (requete.readyState == 4) {
-
-			if (requete.status == 200) {
-				document.getElementById("error").innerHTML = requete.responseText;
-			}else{
-				alert('Une erreur est survenue lors de la mise à jour de la page');
-			}
-
-		}
-	}
-</script>
 <div class="topnav">
-  <a class="url active" href="/E-Shop/">E-Shop</a>
-  <a class="url" href="/E-Shop/ListProducts">Nos produits</a>
-  <a class="url" href="/E-Shop/MyBasket">Votre panier</a>
   <%
   	out.println((String) request.getAttribute("button"));
   %>
 </div>
 	<div style="margin:2% 5%">
-		<h1> login</h1>
-		<div class="wrapper">
+	<h1>Confirmer le mot de passe :</h1>
+	<div class="wrapper">
 		<div></div>
 			<div>
 				<div id="error"> <% out.println( (String) request.getAttribute("erreur")); %></div>
-				<form onsubmit="return valider()" action="/E-Shop/Log" method="post">
-				<p>email :</p>
-				<input id="email" type="text" name="id" value="<% out.println( (String) request.getAttribute("email")); %>" >
+				<form  action="/E-Shop/Log/ConfirmerMdp" method="post">
 				<p>Password :</p>
 				<input id="pass" type="password" name="pass">
-				<a href="/E-Shop/Sinscire" style="color:blue">s'inscrire</a>
-				<input class="btn"  type="submit" value="login">
-				</form>
-			</div>
+				<input class="btn"  type="submit" value="Suivant">
+			</form>
 		</div>
 	</div>
 </body>
@@ -86,6 +30,7 @@
 form{
 margin: 25% 2%;
 }
+
 input,button{
 width: 100%;
 }
@@ -104,7 +49,6 @@ width: 100%;
   border-radius: 5px;
   background-color: #ffff;
 }
-
 
 
 .prod {

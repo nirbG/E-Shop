@@ -5,7 +5,6 @@ import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,44 +14,40 @@ import dao.UserDao;
 import model.User;
 
 /**
- * Servlet implementation class Log
+ * Servlet implementation class ConfirmerMdp
  */
-@WebServlet("/Log")
-public class Log extends HttpServlet {
+@WebServlet("/Log/ConfirmerMdp")
+public class ConfirmerMdp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final int     COOKIE_MAX_AGE  = 216000 ; // 1sec
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Log() {
+    public ConfirmerMdp() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute( "client" );
+		
 		String co="<a class='active' href='/E-Shop/Log'>Me connecter</a>";
 		if(user!=null) {
-			if( user.getType()==1) {
-				co="<a class='active' href='/E-Shop/Log/User'>Mon compte</a>";
-			}else {
+			if( user.getType()==2) {
 				co="<a class='active' href='/E-Shop/Log/Admin'>Mon compte</a>";
+			}else {
+				co="<a class='active' href='/E-Shop/Log/User'>Mon compte</a>";
 			}
-			
+			if(request.getAttribute("erreur")==null) {
+				request.setAttribute( "erreur", " " );
+			}
+			request.setAttribute( "button", co );
+			this.getServletContext().getRequestDispatcher( "/WEB-INF/confpassword.jsp" ).forward( request, response );
+		}else {
+			response.sendRedirect("/E-Shop/Log");
 		}
-		if(request.getAttribute("erreur")==null) {
-			request.setAttribute( "erreur", " " );
-		}
-		if(request.getAttribute("email")==null) {
-			request.setAttribute( "email", "login@mail.com" );
-		}
-		request.setAttribute( "button", co );
-		this.getServletContext().getRequestDispatcher( "/WEB-INF/logForm.jsp" ).forward( request, response );
 	}
 
 	/**
@@ -61,43 +56,25 @@ public class Log extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub;
 	    request.setAttribute( "erreur", "" );
-		String email = request.getParameter("id");
 	    String pass = request.getParameter("pass");
-	    System.out.println("email"+email+" pass "+pass);
-	    if(pass.isEmpty() || email.isEmpty()) {
+	    if(pass.isEmpty() ) {
 		    request.setAttribute( "erreur", "<p style='color:red'>Un ou plusieur champs sont vides</p>" );
 			doGet(request, response);
 	    }else {
-	    	User u=null;
-	    	try {
-	    		u=UserDao.findByEmail(email);
-	    	} catch (SQLException e) {
-	    		// TODO Auto-generated catch block
-	    		e.printStackTrace();
-	    	}
-	    	if(u!=null) {
-	    		 request.setAttribute( "email", u.getEmail());
-	    			System.out.println(pass+""+u.getMdp());
-	    		if(pass.equals(u.getMdp())){
+	    	HttpSession session = request.getSession();
+			User user = (User) session.getAttribute( "client" );
+	    	if(user==null) {
+	    		response.sendRedirect("/E-Shop");
+	    	}else{
+	    		if(pass.equals(user.getMdp())){
 	    			System.out.println("pass");
-	    			/* Création ou récupération de la session */
-	    			HttpSession session = request.getSession();
-	    			session.setAttribute( "client", u );
-	    			if(u.getType()==1) {
-	    				response.sendRedirect("/E-Shop/Log/User");
-	    			}else {
-	    				response.sendRedirect("/E-Shop/Log/Admin");
-	    			}
+	    				response.sendRedirect("/E-Shop/Log/NewPassword");
 	    		}else {
 	    			request.setAttribute( "erreur", "<p style='color:red'>Mot de passe incorrect</p>" );
 	    			doGet(request, response);
 	    		}
-	    	}else {
-	    		request.setAttribute( "erreur", "<p style='color:red'>L'utilisateur est inconnu</p>" );
-	    		doGet(request, response);
 	    	}
 	    }
 	}
-	
 
 }
